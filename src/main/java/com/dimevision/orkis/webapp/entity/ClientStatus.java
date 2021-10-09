@@ -5,7 +5,6 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
-import java.util.Set;
 
 /**
  * @author Dimevision
@@ -13,11 +12,11 @@ import java.util.Set;
  */
 
 @Entity
-@Table(name = "city")
+@Table(name = "status")
 @NoArgsConstructor
 @Getter
 @Setter
-public class City {
+public class ClientStatus {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -26,13 +25,4 @@ public class City {
 
     @Column(name = "name")
     private String name;
-
-    @ManyToMany
-    @JoinTable(name = "city_has_route",
-            joinColumns = @JoinColumn(name = "city_id"),
-            inverseJoinColumns = @JoinColumn(name = "route_id"))
-    private Set<Route> routes;
-
-    @OneToMany(mappedBy = "city")
-    private Set<Hotel> hotels;
 }

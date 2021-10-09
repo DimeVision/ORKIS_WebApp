@@ -5,7 +5,6 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
-import java.util.Date;
 import java.util.Set;
 
 /**
@@ -16,27 +15,24 @@ import java.util.Set;
  */
 
 @Entity
-@Table(name = "route")
+@Table(name = "country")
 @NoArgsConstructor
 @Getter
 @Setter
-public class Route {
+public class Country {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "id")
     private Long id;
 
-    @Column(name = "departure")
-    private Date departureDate;
+    @Column(name = "name")
+    private String name;
 
-    @Column(name = "arrival")
-    private Date arrivalDate;
+    @OneToMany
+    @JoinColumn(name = "id", nullable = false)
+    private Set<Route> routes;
 
-    @ManyToMany(mappedBy = "routes")
-    private Set<City> cities;
-
-    @ManyToOne
-    @JoinColumn(name = "country_id", nullable = false)
-    private Country countries;
+    @OneToMany(mappedBy = "country")
+    private Set<Agreement> agreement;
 }
