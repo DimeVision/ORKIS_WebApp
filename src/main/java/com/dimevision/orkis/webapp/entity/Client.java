@@ -6,6 +6,7 @@ import lombok.Setter;
 
 import javax.persistence.*;
 import java.util.Date;
+import java.util.Set;
 
 /**
  * JavaBean object that represents client entity
@@ -30,7 +31,7 @@ public class Client {
     private String shortname;
 
     @Column(name = "fullname")
-    private String name;
+    private String fullName;
 
     @Column(name = "sex")
     private Character sex;
@@ -41,5 +42,14 @@ public class Client {
     @Column(name = "birth_place")
     private String birthPlace;
 
-    // TODO: 10/7/2021 Add foreign key for passport_id and status_id fields (Many To One)
+    @OneToOne
+    @JoinColumn(name = "status_id", referencedColumnName = "id")
+    private ClientStatus status;
+
+    @OneToOne
+    @JoinColumn(name = "passport_id", referencedColumnName = "id")
+    private Passport passport;
+
+    @OneToMany(mappedBy = "client")
+    private Set<Agreement> agreements;
 }

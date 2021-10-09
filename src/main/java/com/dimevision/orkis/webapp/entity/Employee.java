@@ -28,7 +28,7 @@ public class Employee {
     private Long id;
 
     @Column(name = "name")
-    private String name;
+    private String shortname;
 
     @Column(name = "fullname")
     private String fullName;
@@ -41,4 +41,8 @@ public class Employee {
             joinColumns = @JoinColumn(name = "employees_id"),
             inverseJoinColumns = @JoinColumn(name = "authorities_id"))
     private Set<EmployeeRole> authorities;
+
+    @ManyToOne
+    @JoinColumn(name = "organization_id", nullable = false)
+    private Organization organization;
 }

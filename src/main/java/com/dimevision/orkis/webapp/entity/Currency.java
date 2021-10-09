@@ -5,20 +5,22 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
+import java.math.BigDecimal;
+import java.util.Date;
 
 /**
- * JavaBean object representing status of {@link Client}
+ *
  *
  * @author Dimevision
  * @version 0.1
  */
 
 @Entity
-@Table(name = "status")
+@Table(name = "currency")
 @NoArgsConstructor
 @Getter
 @Setter
-public class ClientStatus {
+public class Currency {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -28,6 +30,12 @@ public class ClientStatus {
     @Column(name = "name")
     private String name;
 
-    @OneToOne(mappedBy = "status")
-    private Client client;
+    @Column(name = "rate")
+    private BigDecimal rate;
+
+    @Column(name = "date")
+    private Date date;
+
+    @OneToOne(mappedBy = "currency")
+    private Contract contract;
 }

@@ -5,20 +5,21 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
+import java.util.Set;
 
 /**
- * JavaBean object representing status of {@link Client}
+ *
  *
  * @author Dimevision
  * @version 0.1
  */
 
 @Entity
-@Table(name = "status")
+@Table(name = "organization")
 @NoArgsConstructor
 @Getter
 @Setter
-public class ClientStatus {
+public class Organization {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -28,6 +29,12 @@ public class ClientStatus {
     @Column(name = "name")
     private String name;
 
-    @OneToOne(mappedBy = "status")
-    private Client client;
+    @OneToMany(mappedBy = "organization")
+    private Set<Agent> agents;
+
+    @OneToMany(mappedBy = "organization")
+    private Set<Employee> employees;
+
+    @OneToMany(mappedBy = "organization")
+    private Set<Agreement> agreements;
 }

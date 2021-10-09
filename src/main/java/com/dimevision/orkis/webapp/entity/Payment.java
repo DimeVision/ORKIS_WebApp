@@ -5,6 +5,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
+import java.math.BigDecimal;
 import java.util.Date;
 
 /**
@@ -15,11 +16,11 @@ import java.util.Date;
  */
 
 @Entity
-@Table(name = "agreement")
+@Table(name = "payment")
 @NoArgsConstructor
 @Getter
 @Setter
-public class Agreement {
+public class Payment {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -30,26 +31,18 @@ public class Agreement {
     private String title;
 
     @Column(name = "num")
-    private String agreementNumber;
+    private String paymentNumber;
 
     @Column(name = "issue_date")
     private Date issueDate;
 
-    @Column(name = "participants_num")
-    private Short participantsNumber;
+    @Column(name = "amount")
+    private BigDecimal amount;
 
-    @ManyToOne
-    @JoinColumn(name = "country_id", nullable = false)
-    private Country country;
-
-    @ManyToOne
-    @JoinColumn(name = "client_id")
-    private Client client;
-
-    @ManyToOne
-    @JoinColumn(name = "organization_id")
-    private Organization organization;
-
-    @OneToOne(mappedBy = "agreement")
+    @OneToOne
+    @JoinColumn(name = "contracts_id", referencedColumnName = "id")
     private Contract contract;
+
+    @OneToOne(mappedBy = "payment")
+    private Voucher voucher;
 }
