@@ -36,6 +36,12 @@ public class Employee {
     @Column(name = "birth_date")
     private Date birthDate;
 
+    @Column(name = "email")
+    private String email;
+
+    @Column(name = "password")
+    private String password;
+
     @ManyToMany
     @JoinTable(name = "employee_role",
             joinColumns = @JoinColumn(name = "employees_id"),

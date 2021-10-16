@@ -29,8 +29,7 @@ public class Country {
     @Column(name = "name")
     private String name;
 
-    @OneToMany
-    @JoinColumn(name = "id", nullable = false)
+    @OneToMany(mappedBy = "countries")
     private Set<Route> routes;
 
     @OneToMany(mappedBy = "country")

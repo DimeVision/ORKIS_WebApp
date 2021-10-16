@@ -42,6 +42,12 @@ public class Client {
     @Column(name = "birth_place")
     private String birthPlace;
 
+    @Column(name = "email")
+    private String email;
+
+    @Column(name = "password")
+    private String password;
+
     @OneToOne
     @JoinColumn(name = "status_id", referencedColumnName = "id")
     private ClientStatus status;
