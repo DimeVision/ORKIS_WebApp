@@ -1,10 +1,8 @@
 package com.dimevision.orkis.webapp.repository;
 
-import com.dimevision.orkis.webapp.entity.Employee;
+import com.dimevision.orkis.webapp.entity.Agent;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
-
-import java.util.Optional;
 
 /**
  * @author Dimevision
@@ -12,7 +10,7 @@ import java.util.Optional;
  */
 
 @Repository
-public interface EmployeeRepository extends JpaRepository<Employee, Long> {
+public interface AgentRepository extends JpaRepository<Agent, Long> {
 
-    Optional<Employee> findEmployeeByEmail(String email);
+    Agent findAgentByShortName(String name);
 }
