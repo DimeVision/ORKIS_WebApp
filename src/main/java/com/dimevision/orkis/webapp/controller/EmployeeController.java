@@ -19,7 +19,7 @@ import java.util.List;
  */
 
 @Controller
-@RequestMapping("/authenticated")
+//@RequestMapping("/authenticated")
 public class EmployeeController {
 
     private final EmployeeService employeeService;
