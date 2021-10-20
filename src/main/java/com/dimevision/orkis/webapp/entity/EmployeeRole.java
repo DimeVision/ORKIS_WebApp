@@ -3,6 +3,7 @@ package com.dimevision.orkis.webapp.entity;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import lombok.ToString;
 
 import javax.persistence.*;
 import java.util.Set;
@@ -30,5 +31,11 @@ public class EmployeeRole {
     private String name;
 
     @ManyToMany(mappedBy = "authorities")
+    @ToString.Exclude
     private Set<Employee> employees;
+
+    @Override
+    public String toString() {
+        return name;
+    }
 }

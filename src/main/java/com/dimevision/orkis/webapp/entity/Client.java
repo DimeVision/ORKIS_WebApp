@@ -49,7 +49,7 @@ public class Client {
     private String password;
 
     @OneToOne
-    @JoinColumn(name = "status_id", referencedColumnName = "id")
+    @JoinColumn(name = "status_id", referencedColumnName = "id", unique = true)
     private ClientStatus status;
 
     @OneToOne
