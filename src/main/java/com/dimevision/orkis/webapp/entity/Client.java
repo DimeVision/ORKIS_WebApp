@@ -1,5 +1,6 @@
 package com.dimevision.orkis.webapp.entity;
 
+import com.dimevision.orkis.webapp.entity.management.Role;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -27,11 +28,12 @@ public class Client {
     @Column(name = "id")
     private Long id;
 
-    @Column(name = "shortname")
-    private String shortname;
-
-    @Column(name = "fullname")
+    @Column(name = "name")
     private String fullName;
+
+    @Column(name = "role")
+    @Enumerated(EnumType.STRING)
+    private Role role;
 
     @Column(name = "sex")
     private Character sex;
@@ -49,7 +51,7 @@ public class Client {
     private String password;
 
     @OneToOne
-    @JoinColumn(name = "status_id", referencedColumnName = "id", unique = true)
+    @JoinColumn(name = "status_id", referencedColumnName = "id")
     private ClientStatus status;
 
     @OneToOne
