@@ -1,12 +1,13 @@
 package com.dimevision.orkis.webapp.security;
 
-import com.dimevision.orkis.webapp.entity.Client;
+import com.dimevision.orkis.webapp.entity.Employee;
 import lombok.Data;
+import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 
-import java.util.List;
+import java.util.Collection;
 import java.util.Set;
 
 /**
@@ -15,19 +16,26 @@ import java.util.Set;
  */
 
 @Data
-public class SecurityUser implements UserDetails {
+public class SecurityAdmin implements UserDetails {
 
-    private final String username;
-    private final String password;
-    private final Set<SimpleGrantedAuthority> authorities;
-    private final boolean isActive;
+    private String username;
+    private String password;
+    private boolean isActive;
+    private Set<SimpleGrantedAuthority> authorities;
 
-    public String getUsername() {
-        return username;
+    @Override
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+        return authorities;
     }
 
+    @Override
     public String getPassword() {
         return password;
+    }
+
+    @Override
+    public String getUsername() {
+        return username;
     }
 
     @Override
@@ -50,8 +58,10 @@ public class SecurityUser implements UserDetails {
         return isActive;
     }
 
-    public static UserDetails fromClient(Client client) {
-        return new User(client.getEmail(), client.getPassword(),
-                client.getRole().getAuthorities());
+    public static UserDetails fromUser(Employee employee) {
+        return new User(
+                employee.getEmail(), employee.getPassword(),
+                employee.getRole().getAuthorities()
+        );
     }
 }
