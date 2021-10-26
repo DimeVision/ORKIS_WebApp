@@ -1,6 +1,17 @@
 package com.dimevision.orkis.webapp.controller;
 
+import com.dimevision.orkis.webapp.entity.Employee;
+import com.dimevision.orkis.webapp.service.EmployeeDetailsServiceImplementation;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PutMapping;
+
+import java.util.List;
 
 /**
  * @author Dimevision
@@ -10,4 +21,52 @@ import org.springframework.stereotype.Controller;
 @Controller
 public class AdministratorController {
 
+    private final EmployeeDetailsServiceImplementation employeeService;
+
+    @Autowired
+    public AdministratorController(EmployeeDetailsServiceImplementation employeeService) {
+        this.employeeService = employeeService;
+    }
+
+    @GetMapping("/login")
+    public String showLoginPage() {
+        return "login";
+    }
+
+    @GetMapping("/employees")
+    @PreAuthorize("hasAnyAuthority('admin:read', 'superadmin:read', 'client_read')")
+    public String showAllEmployees(Model model) {
+        List<Employee> employees = employeeService.getAllEmployees();
+        model.addAttribute("employees", employees);
+
+        return "employees-view";
+    }
+
+    @GetMapping("/employees/{id}")
+    @PreAuthorize("hasAuthority('admin:read')")
+    public String showEmployeeProfile(@PathVariable Long id, Model model) {
+
+        Employee employee = employeeService.getEmployeeById(id);
+        model.addAttribute("employee", employee);
+
+        return "employee-profile";
+    }
+
+    @DeleteMapping("/delete-employee/{id}")
+    @PreAuthorize("hasAuthority('admin:write')")
+    public String deleteEmployee(@PathVariable Long id) {
+        employeeService.deleteEmployeeById(id);
+
+        return "redirect:/employees";
+    }
+
+    @PutMapping("/update-employee/{id}")
+    @PreAuthorize("hasAuthority('admin:write')")
+    public String updateEmployee(@PathVariable Long id, Model model) {
+
+        Employee employee = employeeService.getEmployeeById(id);
+        model.addAttribute("employee", employee);
+
+        return "employee-update";
+    }
 }
