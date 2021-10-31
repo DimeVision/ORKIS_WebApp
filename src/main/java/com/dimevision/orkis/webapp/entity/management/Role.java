@@ -20,8 +20,9 @@ public enum Role {
 
     SUPERADMIN(Set.of(ADMIN_READ, ADMIN_WRITE)),
     ADMIN(Set.of(ADMIN_READ, ADMIN_WRITE, CLIENT_WRITE)),
-    CLIENT(Set.of(CLIENT_READ)),
-    MANAGER(Set.of()),
+    AGENT(Set.of(AGENT_READ, AGENT_WRITE)),
+    CLIENT(Set.of(CLIENT_READ, CLIENT_WRITE)),
+    MANAGER(Set.of(MANAGER_READ, MANAGER_WRITE)),
     ACCOUNTANT(Set.of());
 
     private final Set<Permission> permissions;

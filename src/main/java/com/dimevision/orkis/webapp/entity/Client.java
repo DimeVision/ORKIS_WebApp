@@ -4,8 +4,11 @@ import com.dimevision.orkis.webapp.entity.management.Role;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 
 import javax.persistence.*;
+import java.time.LocalDate;
 import java.util.Date;
 import java.util.Set;
 
@@ -24,7 +27,7 @@ import java.util.Set;
 public class Client {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
     private Long id;
 
@@ -39,7 +42,7 @@ public class Client {
     private Character sex;
 
     @Column(name = "birth_date")
-    private Date birthDate;
+    private LocalDate birthDate;
 
     @Column(name = "birth_place")
     private String birthPlace;
@@ -50,7 +53,7 @@ public class Client {
     @Column(name = "password")
     private String password;
 
-    @OneToOne
+    @ManyToOne
     @JoinColumn(name = "status_id", referencedColumnName = "id")
     private ClientStatus status;
 
@@ -60,4 +63,9 @@ public class Client {
 
     @OneToMany(mappedBy = "client")
     private Set<Agreement> agreements;
+
+    @Override
+    public String toString() {
+        return fullName;
+    }
 }
