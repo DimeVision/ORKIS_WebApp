@@ -6,16 +6,16 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.Optional;
 
 /**
  * @author Dimevision
  * @version 0.1
  */
 
-@Repository
 public interface AgentRepository extends JpaRepository<Agent, Long> {
 
-    Agent findAgentByShortName(String name);
+    Optional<Agent> findAgentByEmail(String email);
 
     @Override
     @Query(value = "SELECT * " +
