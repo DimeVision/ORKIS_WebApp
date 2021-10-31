@@ -1,15 +1,13 @@
 package com.dimevision.orkis.webapp.controller;
 
-import com.dimevision.orkis.webapp.entity.Employee;
+import com.dimevision.orkis.webapp.entity.Agent;
+import com.dimevision.orkis.webapp.service.AgentDetailsServiceImplementation;
 import com.dimevision.orkis.webapp.service.EmployeeDetailsServiceImplementation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PutMapping;
 
 import java.util.List;
 
@@ -21,10 +19,12 @@ import java.util.List;
 @Controller
 public class AdministratorController {
 
+    private final AgentDetailsServiceImplementation agentService;
     private final EmployeeDetailsServiceImplementation employeeService;
 
     @Autowired
-    public AdministratorController(EmployeeDetailsServiceImplementation employeeService) {
+    public AdministratorController(AgentDetailsServiceImplementation agentService, EmployeeDetailsServiceImplementation employeeService) {
+        this.agentService = agentService;
         this.employeeService = employeeService;
     }
 
@@ -33,40 +33,19 @@ public class AdministratorController {
         return "login";
     }
 
-    @GetMapping("/employees")
-    @PreAuthorize("hasAnyAuthority('admin:read', 'superadmin:read', 'client_read')")
-    public String showAllEmployees(Model model) {
-        List<Employee> employees = employeeService.getAllEmployees();
-        model.addAttribute("employees", employees);
-
-        return "employees-view";
+    @GetMapping("/admin")
+    @PreAuthorize("hasAnyAuthority('admin:read', 'superadmin:read')")
+    public String showAdminPanel(Model model) {
+        model.addAttribute("employeeCount", (long) employeeService.getAllEmployees().size());
+        return "admin-panel";
     }
 
-    @GetMapping("/employees/{id}")
-    @PreAuthorize("hasAuthority('admin:read')")
-    public String showEmployeeProfile(@PathVariable Long id, Model model) {
+    @GetMapping("/agents")
+    @PreAuthorize("hasAnyAuthority('admin:read', 'superadmin:read', 'client:read')")
+    public String showAllAgents(Model model) {
 
-        Employee employee = employeeService.getEmployeeById(id);
-        model.addAttribute("employee", employee);
-
-        return "employee-profile";
-    }
-
-    @DeleteMapping("/delete-employee/{id}")
-    @PreAuthorize("hasAuthority('admin:write')")
-    public String deleteEmployee(@PathVariable Long id) {
-        employeeService.deleteEmployeeById(id);
-
-        return "redirect:/employees";
-    }
-
-    @PutMapping("/update-employee/{id}")
-    @PreAuthorize("hasAuthority('admin:write')")
-    public String updateEmployee(@PathVariable Long id, Model model) {
-
-        Employee employee = employeeService.getEmployeeById(id);
-        model.addAttribute("employee", employee);
-
-        return "employee-update";
+        List<Agent> agents = agentService.findAllAgents();
+        model.addAttribute("agents", agents);
+        return "agents-list";
     }
 }
