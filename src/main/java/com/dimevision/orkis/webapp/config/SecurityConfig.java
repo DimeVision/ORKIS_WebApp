@@ -27,6 +27,11 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     private final EmployeeDetailsServiceImplementation employeeService;
 
+    private static final String ADMIN_ENDPOINT = "";
+    private static final String EMPLOYEE_ENDPOINT = "";
+    private static final String AGENT_ENDPOINT = "";
+    private static final String CLIENT_ENDPOINT = "";
+
     @Autowired
     public SecurityConfig(EmployeeDetailsServiceImplementation employeeService) {
         this.employeeService = employeeService;
