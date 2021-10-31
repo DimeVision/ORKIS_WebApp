@@ -4,6 +4,7 @@ import com.dimevision.orkis.webapp.entity.Client;
 import com.dimevision.orkis.webapp.repository.ClientRepository;
 import com.dimevision.orkis.webapp.security.SecurityUser;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
