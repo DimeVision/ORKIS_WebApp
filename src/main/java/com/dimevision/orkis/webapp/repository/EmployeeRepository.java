@@ -14,6 +14,7 @@ import java.util.Optional;
  * @version 0.1
  */
 
+@Repository
 public interface EmployeeRepository extends JpaRepository<Employee, Long> {
 
     Optional<Employee> findEmployeeByEmail(String email);

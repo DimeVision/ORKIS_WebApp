@@ -14,12 +14,12 @@ import java.util.Optional;
  * @version 0.1
  */
 
-
+@Repository
 public interface ClientRepository extends JpaRepository<Client, Long> {
 
     Optional<Client> findClientByEmail(String email);
 
-    @Query("delete from Passport p where p.id = ?1")
+    @Query("delete from Client c where c.id = ?1")
     @Modifying
     @Override
     void deleteById(Long aLong);

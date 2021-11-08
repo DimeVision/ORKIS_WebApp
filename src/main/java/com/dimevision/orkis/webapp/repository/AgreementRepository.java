@@ -3,6 +3,8 @@ package com.dimevision.orkis.webapp.repository;
 import com.dimevision.orkis.webapp.entity.Agreement;
 import com.dimevision.orkis.webapp.entity.Client;
 import com.dimevision.orkis.webapp.entity.Organization;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
@@ -18,4 +20,7 @@ import java.util.List;
 public interface AgreementRepository extends JpaRepository<Agreement, Long> {
 
     List<Agreement> findAllByAgreementNumberAndIssueDateAndParticipantsNumberAndOrganizationAndClient(String agreementNumber, Date issueDate, Short participantsNumber, Organization organization, Client client);
+
+    @Override
+    Page<Agreement> findAll(Pageable pageable);
 }
