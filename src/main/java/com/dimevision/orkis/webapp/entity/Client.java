@@ -4,13 +4,20 @@ import com.dimevision.orkis.webapp.entity.management.Role;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.hibernate.annotations.ColumnDefault;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
+import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
 import javax.persistence.*;
 import java.time.LocalDate;
 import java.util.Date;
 import java.util.Set;
+
+import static javax.persistence.EnumType.STRING;
+import static javax.persistence.FetchType.LAZY;
+import static javax.persistence.GenerationType.IDENTITY;
 
 /**
  * JavaBean object that represents client entity
@@ -27,7 +34,7 @@ import java.util.Set;
 public class Client {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = IDENTITY)
     @Column(name = "id")
     private Long id;
 
@@ -35,13 +42,14 @@ public class Client {
     private String fullName;
 
     @Column(name = "role")
-    @Enumerated(EnumType.STRING)
+    @Enumerated(STRING)
     private Role role;
 
     @Column(name = "sex")
     private Character sex;
 
     @Column(name = "birth_date")
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     private LocalDate birthDate;
 
     @Column(name = "birth_place")
@@ -53,16 +61,20 @@ public class Client {
     @Column(name = "password")
     private String password;
 
-    @ManyToOne
-    @JoinColumn(name = "status_id", referencedColumnName = "id")
+    @ManyToOne(targetEntity = ClientStatus.class, fetch = LAZY)
+    @JoinColumn(name = "status_id", referencedColumnName = "id", insertable = false)
     private ClientStatus status;
 
     @OneToOne
-    @JoinColumn(name = "passport_id", referencedColumnName = "id")
+    @JoinColumn(name = "passport_id")
     private Passport passport;
 
     @OneToMany(mappedBy = "client")
     private Set<Agreement> agreements;
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
 
     @Override
     public String toString() {

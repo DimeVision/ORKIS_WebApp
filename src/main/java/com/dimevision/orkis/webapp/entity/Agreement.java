@@ -3,8 +3,10 @@ package com.dimevision.orkis.webapp.entity;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
+import java.time.LocalDate;
 import java.util.Date;
 
 /**
@@ -33,6 +35,7 @@ public class Agreement {
     private String agreementNumber;
 
     @Column(name = "issue_date")
+    @DateTimeFormat(pattern = "yyyy-MM-dd hh:mm a")
     private Date issueDate;
 
     @Column(name = "participants_num")
@@ -41,6 +44,14 @@ public class Agreement {
     @ManyToOne
     @JoinColumn(name = "country_id", nullable = false)
     private Country country;
+
+    @Column(name = "trip_start")
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
+    private LocalDate tripStartDate;
+
+    @Column(name = "trip_end")
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
+    private LocalDate tripEndDate;
 
     @ManyToOne
     @JoinColumn(name = "client_id")

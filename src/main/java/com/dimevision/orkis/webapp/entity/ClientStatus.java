@@ -5,6 +5,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
+import java.util.List;
 
 /**
  * JavaBean object representing status of {@link Client}
@@ -21,13 +22,18 @@ import javax.persistence.*;
 public class ClientStatus {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
     private Long id;
 
     @Column(name = "name")
     private String name;
 
-    @OneToOne(mappedBy = "status")
-    private Client client;
+    @OneToMany(mappedBy = "status", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Client> client;
+
+    @Override
+    public String toString() {
+        return name;
+    }
 }

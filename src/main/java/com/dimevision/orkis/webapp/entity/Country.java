@@ -34,4 +34,9 @@ public class Country {
 
     @OneToMany(mappedBy = "country")
     private Set<Agreement> agreement;
+
+    @Override
+    public String toString() {
+        return name;
+    }
 }

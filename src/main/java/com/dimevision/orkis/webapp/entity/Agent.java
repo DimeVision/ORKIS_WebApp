@@ -4,8 +4,11 @@ import com.dimevision.orkis.webapp.entity.management.Role;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.hibernate.annotations.ColumnDefault;
 
 import javax.persistence.*;
+
+import static javax.persistence.FetchType.LAZY;
 
 /**
  *
@@ -22,7 +25,7 @@ import javax.persistence.*;
 public class Agent {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
     private Long id;
 
@@ -31,15 +34,15 @@ public class Agent {
 
     @Column(name = "role")
     @Enumerated(EnumType.STRING)
-    private Role role;
+    private Role role = Role.AGENT;
 
-    @Column(name = "email")
+    @Column(name = "email", unique = true)
     private String email;
 
     @Column(name = "password")
     private String password;
 
-    @ManyToOne
+    @ManyToOne(fetch = LAZY)
     @JoinColumn(name = "organization_id", nullable = false)
     private Organization organization;
 }
