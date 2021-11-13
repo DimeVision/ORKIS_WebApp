@@ -1,5 +1,7 @@
 package com.dimevision.orkis.webapp.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -32,14 +34,17 @@ public class Organization {
 
     @OneToMany(mappedBy = "organization")
     @ToString.Exclude
+    @JsonManagedReference
     private Set<Agent> agents;
 
     @OneToMany(mappedBy = "organization")
     @ToString.Exclude
+    @JsonManagedReference
     private Set<Employee> employees;
 
     @OneToMany(mappedBy = "organization")
     @ToString.Exclude
+    @JsonManagedReference
     private Set<Agreement> agreements;
 
     @Override

@@ -1,5 +1,6 @@
 package com.dimevision.orkis.webapp.entity;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -29,5 +30,6 @@ public class TravelDocument {
     private String name;
 
     @OneToOne(mappedBy = "document")
+    @JsonBackReference
     private Voucher voucher;
 }

@@ -1,5 +1,6 @@
 package com.dimevision.orkis.webapp.entity;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -30,6 +31,7 @@ public class ClientStatus {
     private String name;
 
     @OneToMany(mappedBy = "status", cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonManagedReference
     private List<Client> client;
 
     @Override

@@ -1,5 +1,6 @@
 package com.dimevision.orkis.webapp.entity;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -37,5 +38,6 @@ public class Currency {
     private Date date;
 
     @OneToOne(mappedBy = "currency")
+    @JsonBackReference
     private Contract contract;
 }

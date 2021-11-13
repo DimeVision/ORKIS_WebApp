@@ -1,5 +1,6 @@
 package com.dimevision.orkis.webapp.entity;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -30,5 +31,6 @@ public class Transport {
 
     @ManyToOne
     @JoinColumn(name = "voucher_id", referencedColumnName = "id")
+    @JsonBackReference
     private Voucher voucher;
 }

@@ -1,5 +1,6 @@
 package com.dimevision.orkis.webapp.entity;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -32,9 +33,11 @@ public class Hotel {
     private String starsNumber;
 
     @Column(name = "address")
+    @JsonBackReference
     private String address;
 
     @ManyToOne
     @JoinColumn(name = "city_id", nullable = false)
+    @JsonBackReference
     private City city;
 }

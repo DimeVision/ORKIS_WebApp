@@ -1,5 +1,6 @@
 package com.dimevision.orkis.webapp.entity;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -49,6 +50,7 @@ public class Passport {
 
     @OneToOne(mappedBy = "passport")
     @OnDelete(action = OnDeleteAction.CASCADE)
+    @JsonBackReference
     private Client client;
 
     @Override

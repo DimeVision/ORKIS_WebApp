@@ -1,5 +1,7 @@
 package com.dimevision.orkis.webapp.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -32,6 +34,7 @@ public class EmployeeRole {
 
     @ManyToMany(mappedBy = "authorities")
     @ToString.Exclude
+    @JsonManagedReference
     private Set<Employee> employees;
 
     @Override

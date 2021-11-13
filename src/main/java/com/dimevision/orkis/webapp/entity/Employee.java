@@ -1,6 +1,9 @@
 package com.dimevision.orkis.webapp.entity;
 
 import com.dimevision.orkis.webapp.entity.management.Role;
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -49,10 +52,12 @@ public class Employee {
     @JoinTable(name = "employee_role",
             joinColumns = @JoinColumn(name = "employees_id"),
             inverseJoinColumns = @JoinColumn(name = "authorities_id"))
+    @JsonManagedReference
     private Set<EmployeeRole> authorities;
 
     @ManyToOne
     @JoinColumn(name = "organization_id", nullable = false)
+    @JsonBackReference
     private Organization organization;
 
     @Override

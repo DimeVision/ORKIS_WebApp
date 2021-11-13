@@ -1,5 +1,7 @@
 package com.dimevision.orkis.webapp.entity;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -27,16 +29,12 @@ public class Route {
     @Column(name = "id")
     private Long id;
 
-    @Column(name = "departure")
-    private Date departureDate;
-
-    @Column(name = "arrival")
-    private Date arrivalDate;
-
     @ManyToMany(mappedBy = "routes")
+    @JsonManagedReference
     private Set<City> cities;
 
     @ManyToOne
     @JoinColumn(name = "country_id", nullable = false)
+    @JsonBackReference
     private Country countries;
 }

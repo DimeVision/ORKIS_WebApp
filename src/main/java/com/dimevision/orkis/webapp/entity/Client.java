@@ -1,6 +1,8 @@
 package com.dimevision.orkis.webapp.entity;
 
 import com.dimevision.orkis.webapp.entity.management.Role;
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -63,13 +65,16 @@ public class Client {
 
     @ManyToOne(targetEntity = ClientStatus.class, fetch = LAZY)
     @JoinColumn(name = "status_id", referencedColumnName = "id", insertable = false)
+    @JsonBackReference
     private ClientStatus status;
 
-    @OneToOne
+    @OneToOne(fetch = LAZY)
     @JoinColumn(name = "passport_id")
+    @JsonBackReference
     private Passport passport;
 
     @OneToMany(mappedBy = "client")
+    @JsonManagedReference
     private Set<Agreement> agreements;
 
     public void setPassword(String password) {

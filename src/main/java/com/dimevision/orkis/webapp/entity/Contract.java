@@ -1,5 +1,7 @@
 package com.dimevision.orkis.webapp.entity;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -41,15 +43,19 @@ public class Contract {
 
     @OneToOne
     @JoinColumn(name = "agreement_id", referencedColumnName = "id")
+    @JsonBackReference
     private Agreement agreement;
 
     @OneToMany(mappedBy = "contract")
+    @JsonManagedReference
     private Set<Participant> participants;
 
     @OneToOne
     @JoinColumn(name = "currency_id", referencedColumnName = "id")
+    @JsonBackReference
     private Currency currency;
 
     @OneToOne(mappedBy = "contract")
+    @JsonBackReference
     private Payment payment;
 }

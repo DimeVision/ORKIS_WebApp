@@ -1,5 +1,6 @@
 package com.dimevision.orkis.webapp.entity;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -31,8 +32,10 @@ public class City {
     @JoinTable(name = "city_has_route",
             joinColumns = @JoinColumn(name = "city_id"),
             inverseJoinColumns = @JoinColumn(name = "route_id"))
+    @JsonManagedReference
     private Set<Route> routes;
 
     @OneToMany(mappedBy = "city")
+    @JsonManagedReference
     private Set<Hotel> hotels;
 }

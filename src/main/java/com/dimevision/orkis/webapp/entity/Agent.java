@@ -1,6 +1,8 @@
 package com.dimevision.orkis.webapp.entity;
 
 import com.dimevision.orkis.webapp.entity.management.Role;
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -44,5 +46,6 @@ public class Agent {
 
     @ManyToOne(fetch = LAZY)
     @JoinColumn(name = "organization_id", nullable = false)
+    @JsonBackReference
     private Organization organization;
 }

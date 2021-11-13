@@ -1,5 +1,6 @@
 package com.dimevision.orkis.webapp.entity;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -8,6 +9,8 @@ import org.springframework.format.annotation.DateTimeFormat;
 import javax.persistence.*;
 import java.time.LocalDate;
 import java.util.Date;
+
+import static javax.persistence.GenerationType.IDENTITY;
 
 /**
  *
@@ -24,7 +27,7 @@ import java.util.Date;
 public class Agreement {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = IDENTITY)
     @Column(name = "id")
     private Long id;
 
@@ -35,7 +38,7 @@ public class Agreement {
     private String agreementNumber;
 
     @Column(name = "issue_date")
-    @DateTimeFormat(pattern = "yyyy-MM-dd hh:mm a")
+    @DateTimeFormat(pattern = "yyyy-MM-dd hh:mm")
     private Date issueDate;
 
     @Column(name = "participants_num")
@@ -43,6 +46,7 @@ public class Agreement {
 
     @ManyToOne
     @JoinColumn(name = "country_id", nullable = false)
+    @JsonBackReference
     private Country country;
 
     @Column(name = "trip_start")
@@ -55,12 +59,15 @@ public class Agreement {
 
     @ManyToOne
     @JoinColumn(name = "client_id")
+    @JsonBackReference
     private Client client;
 
     @ManyToOne
     @JoinColumn(name = "organization_id")
+    @JsonBackReference
     private Organization organization;
 
     @OneToOne(mappedBy = "agreement")
+    @JsonBackReference
     private Contract contract;
 }
