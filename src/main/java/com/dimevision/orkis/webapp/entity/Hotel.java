@@ -40,4 +40,19 @@ public class Hotel {
     @JoinColumn(name = "city_id", nullable = false)
     @JsonBackReference
     private City city;
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Hotel hotel = (Hotel) o;
+
+        return id.equals(hotel.id);
+    }
+
+    @Override
+    public int hashCode() {
+        return id.hashCode();
+    }
 }

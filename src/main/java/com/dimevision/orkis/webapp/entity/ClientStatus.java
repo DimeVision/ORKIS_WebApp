@@ -7,6 +7,7 @@ import lombok.Setter;
 
 import javax.persistence.*;
 import java.util.List;
+import java.util.Objects;
 
 /**
  * JavaBean object representing status of {@link Client}
@@ -30,12 +31,27 @@ public class ClientStatus {
     @Column(name = "name")
     private String name;
 
-    @OneToMany(mappedBy = "status", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "status", orphanRemoval = true)
     @JsonManagedReference
     private List<Client> client;
 
     @Override
     public String toString() {
         return name;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        ClientStatus that = (ClientStatus) o;
+
+        return id.equals(that.id);
+    }
+
+    @Override
+    public int hashCode() {
+        return id.hashCode();
     }
 }

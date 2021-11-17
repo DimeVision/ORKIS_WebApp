@@ -6,7 +6,10 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
+import java.util.Objects;
 import java.util.Set;
+
+import static javax.persistence.FetchType.LAZY;
 
 /**
  *
@@ -23,16 +26,20 @@ import java.util.Set;
 public class Country {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
     private Long id;
 
     @Column(name = "name")
     private String name;
 
-    @OneToMany(mappedBy = "countries")
+    @OneToMany(mappedBy = "countries", fetch = LAZY)
     @JsonManagedReference
     private Set<Route> routes;
+
+    @OneToMany(mappedBy = "country", fetch = LAZY)
+    @JsonManagedReference
+    private Set<City> cities;
 
     @OneToMany(mappedBy = "country")
     @JsonManagedReference
@@ -41,5 +48,18 @@ public class Country {
     @Override
     public String toString() {
         return name;
+    }
+
+    @Override
+    public boolean equals(Object object) {
+        if (this == object) return true;
+        if (object == null || getClass() != object.getClass()) return false;
+        Country country = (Country) object;
+        return id.equals(country.id);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id);
     }
 }

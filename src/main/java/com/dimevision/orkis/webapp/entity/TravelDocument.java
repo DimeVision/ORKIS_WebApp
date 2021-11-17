@@ -32,4 +32,19 @@ public class TravelDocument {
     @OneToOne(mappedBy = "document")
     @JsonBackReference
     private Voucher voucher;
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        TravelDocument that = (TravelDocument) o;
+
+        return id.equals(that.id);
+    }
+
+    @Override
+    public int hashCode() {
+        return id.hashCode();
+    }
 }

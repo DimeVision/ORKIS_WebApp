@@ -48,7 +48,7 @@ public class Passport {
     @Column(name = "department")
     private String department;
 
-    @OneToOne(mappedBy = "passport")
+    @OneToOne(mappedBy = "passport", fetch = FetchType.LAZY)
     @OnDelete(action = OnDeleteAction.CASCADE)
     @JsonBackReference
     private Client client;
@@ -56,5 +56,20 @@ public class Passport {
     @Override
     public String toString() {
         return serialNumber + " " + passportNumber;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Passport passport = (Passport) o;
+
+        return id.equals(passport.id);
+    }
+
+    @Override
+    public int hashCode() {
+        return id.hashCode();
     }
 }

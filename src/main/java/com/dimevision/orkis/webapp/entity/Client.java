@@ -63,12 +63,12 @@ public class Client {
     @Column(name = "password")
     private String password;
 
-    @ManyToOne(targetEntity = ClientStatus.class, fetch = LAZY)
+    @ManyToOne(targetEntity = ClientStatus.class)
     @JoinColumn(name = "status_id", referencedColumnName = "id", insertable = false)
     @JsonBackReference
     private ClientStatus status;
 
-    @OneToOne(fetch = LAZY)
+    @OneToOne(targetEntity = Passport.class)
     @JoinColumn(name = "passport_id")
     @JsonBackReference
     private Passport passport;
@@ -84,5 +84,20 @@ public class Client {
     @Override
     public String toString() {
         return fullName;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Client client = (Client) o;
+
+        return id.equals(client.id);
+    }
+
+    @Override
+    public int hashCode() {
+        return id.hashCode();
     }
 }

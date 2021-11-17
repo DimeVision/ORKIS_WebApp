@@ -33,4 +33,19 @@ public class Participant {
     @JoinColumn(name = "contract_id")
     @JsonBackReference
     private Contract contract;
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Participant that = (Participant) o;
+
+        return id.equals(that.id);
+    }
+
+    @Override
+    public int hashCode() {
+        return id.hashCode();
+    }
 }
