@@ -8,11 +8,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
-
 /**
- *
- *
  * @author Dimevision
  * @version 0.1
  */
@@ -29,10 +25,12 @@ public class EmployeeController {
 
     @GetMapping("/employees")
     @PreAuthorize("hasAnyAuthority('admin:read', 'superadmin:read', 'client:read')")
-    public String showAllEmployees(Model model) {
+    public String showAllEmployees(Model model,
+                                   @PathVariable(required = false) @RequestParam(value = "pageNumber", required = false, defaultValue = "1") int pageNumber,
+                                   @RequestParam(value = "size", required = false, defaultValue = "25") int size
+    ) {
 
-        List<Employee> employees = employeeService.getAllEmployees();
-        model.addAttribute("employees", employees);
+        model.addAttribute("employees", employeeService.getEmployeePage(pageNumber, size));
 
         return "employees-list";
     }
