@@ -7,6 +7,7 @@ import com.dimevision.orkis.webapp.service.AgentDetailsServiceImplementation;
 import com.dimevision.orkis.webapp.service.ClientDetailsServiceImplementation;
 import com.dimevision.orkis.webapp.service.EmployeeDetailsServiceImplementation;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PostAuthorize;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
@@ -16,6 +17,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.view.RedirectView;
 
 /**
  * @author Dimevision
@@ -40,6 +42,11 @@ public class AdministratorController {
     @GetMapping("/login")
     public String showLoginPage() {
         return "login";
+    }
+
+    @GetMapping("/")
+    public String showStarterPage() {
+        return "starter-page";
     }
 
     @GetMapping("/admin")
@@ -72,13 +79,12 @@ public class AdministratorController {
     }
 
     @PostMapping("/agent-create")
-    public String addAgent(@ModelAttribute("agent") Agent agent) {
+    public RedirectView addAgent(@ModelAttribute("agent") Agent agent) {
 
-        System.out.println(agent.getPassword());
         agent.setPassword(passwordEncoder.encode(agent.getPassword()));
 
         agentService.saveAgent(agent);
-        return "redirect:/agents";
+        return new RedirectView("agents", true);
     }
 
     @GetMapping("/agent-update/{id}")

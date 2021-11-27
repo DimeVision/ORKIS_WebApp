@@ -9,6 +9,7 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.view.RedirectView;
 
 import java.util.List;
 
@@ -27,7 +28,7 @@ public class ManagerController {
     private final CountryRepository countryRepository;
     private final ClientRepository clientRepository;
     private final CityRepository cityRepository;
-
+    private final ContractRepository contractRepository;
     private final RouteRepository routeRepository;
 
     @Autowired
@@ -38,7 +39,7 @@ public class ManagerController {
                              CountryRepository countryRepository,
                              ClientRepository clientRepository,
                              CityRepository cityRepository,
-                             RouteRepository routeRepository) {
+                             ContractRepository contractRepository, RouteRepository routeRepository) {
         this.employeeService = employeeService;
         this.agreementRepository = agreementRepository;
         this.organizationRepository = organizationRepository;
@@ -46,17 +47,18 @@ public class ManagerController {
         this.countryRepository = countryRepository;
         this.clientRepository = clientRepository;
         this.cityRepository = cityRepository;
+        this.contractRepository = contractRepository;
         this.routeRepository = routeRepository;
     }
 
     @GetMapping("/manager")
-    @PreAuthorize("hasAnyAuthority('admin:read', 'superadmin:read', 'manager:read')")
+    @PreAuthorize("hasAnyAuthority('superadmin:read', 'manager:read')")
     public String showManagerPanel() {
         return "manager-panel";
     }
 
     @GetMapping("/agreements")
-    @PreAuthorize("hasAnyAuthority('admin:read', 'manager:read')")
+    @PreAuthorize("hasAnyAuthority('superadmin:read', 'manager:read')")
     public String showAllAgreements(
             Model model,
             @RequestParam(value = "pageNumber", required = false, defaultValue = "1") int pageNumber,
@@ -102,7 +104,7 @@ public class ManagerController {
     ) {
 
         model.addAttribute("organizations", organizationRepository.findAll());
-        model.addAttribute("agents", agentRepository.findAllByOrganizationId(city_id));
+        model.addAttribute("agents", agentRepository.findAllByOrganizationId(organization.getId()));
         model.addAttribute("countries", countryRepository.findAll());
         model.addAttribute("clients", clientRepository.findAll());
         model.addAttribute("cities", cityRepository.findAllByCountryId(country_id));
@@ -112,38 +114,40 @@ public class ManagerController {
 
     @PostMapping("/create-agreement")
     public String addAgreement(
-            Model model,
-            @ModelAttribute Agreement agreement,
-            @ModelAttribute Client client,
-            @ModelAttribute(name = "route") Route route) {
+            Route route,
+            @ModelAttribute("emptyAgreement") Agreement agreement,
+            @ModelAttribute("contract") Contract contract) {
 
         route.setCountries(agreement.getCountry());
         routeRepository.save(route);
 
         System.out.println("\t" + route);
 
-        agreement.setTitle("Договор №" + agreement.getAgreementNumber() + " от " + agreement.getIssueDate());
-        agreement.setClient(client);
-        model.addAttribute("agreementData", agreement);
+        agreement.setTitle("Договор " + agreement.getClient().getFullName() + " от " + agreement.getIssueDate());
         agreementRepository.save(agreement);
 
-        return "redirect:/create-contract";
-    }
-
-    @GetMapping("/create-contract")
-    public String createContractForm(
-            Contract contract,
-            @ModelAttribute("agreementData") Agreement agreement,
-            Model model) {
-
-        model.addAttribute("contract", contract);
+        contract.setTitle(agreement.getTitle());
 
         return "add-contract";
     }
 
+//    @GetMapping("/create-contract")
+//    public String createContractForm(
+//            Contract contract,
+//            @ModelAttribute("agreementData") Agreement agreement,
+//            @ModelAttribute("agent") Agent agent,
+//            Model model) {
+//
+//        model.addAttribute("agent", agent);
+//        model.addAttribute("contract", contract);
+//
+//        return "add-contract";
+//    }
+
     @PostMapping("/create-contract")
-    public String addContract(
-            @ModelAttribute Contract contract) {
-        return "redirect:/contracts";
+    public RedirectView addContract(@ModelAttribute("contract") Contract contract) {
+
+        contractRepository.save(contract);
+        return new RedirectView("/contracts", true);
     }
 }

@@ -47,23 +47,6 @@ public class ClientController {
         return "clients-list";
     }
 
-    @GetMapping("/create-client")
-    public String showClientForm(@ModelAttribute(name = "passport") Passport passport,
-                                 Model model) {
-
-        System.out.println("\tPassport id: " + passport.getId() + ", @RequestParam id: ");
-
-        model.addAttribute("client", new Client());
-        return "add-client";
-    }
-
-    @PostMapping("/create-client")
-    public String createClient(@ModelAttribute Client client) {
-
-        clientService.saveClient(client);
-        return "redirect:/clients";
-    }
-
     @GetMapping("/create-passport")
     public String showPassportForm(Model model) {
 
@@ -72,13 +55,25 @@ public class ClientController {
     }
 
     @PostMapping("/create-passport")
-    public String createPassport(@ModelAttribute("passport") Passport passport,
+    public String createPassport(@ModelAttribute("passportTest") Passport passport,
                                  Model model) {
 
-        model.addAttribute("passportData", passport);
         passportRepository.save(passport);
 
-        return "redirect:/create-client";
+        Client client = new Client();
+        client.setPassport(passport);
+
+        model.addAttribute("passport", passport);
+        model.addAttribute("client", client);
+
+        return "add-client";
+    }
+
+    @PostMapping("/create-client")
+    public String createClient(@ModelAttribute("client") Client client) {
+
+        clientService.saveClient(client);
+        return "redirect:/clients";
     }
 
     @GetMapping("/delete-client/{id}")
