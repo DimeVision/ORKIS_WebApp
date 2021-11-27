@@ -1,7 +1,6 @@
 package com.dimevision.orkis.webapp.repository;
 
 import com.dimevision.orkis.webapp.entity.Agent;
-import com.dimevision.orkis.webapp.entity.Organization;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -22,12 +21,14 @@ public interface AgentRepository extends JpaRepository<Agent, Long> {
     Optional<Agent> findAgentByEmail(String email);
 
     @Override
-    @Query(value = "SELECT * " +
-            "FROM agent " +
-            "LEFT JOIN organization o " +
-            "on agent.organization_id = o.id",
-            nativeQuery = true)
     Page<Agent> findAll(Pageable pageable);
 
     List<Agent> findAllByOrganizationId(Long organization_id);
+
+//    @Query(value = "SELECT * " +
+//            "FROM agreement as a " +
+//            "LEFT JOIN agent as emp " +
+//            "ON a.organization_id = emp.id",
+//            nativeQuery = true)
+    Agent findAgentByOrganizationId(Long id);
 }

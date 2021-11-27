@@ -19,7 +19,7 @@ import java.util.List;
 @Repository
 public interface AgreementRepository extends JpaRepository<Agreement, Long> {
 
-    List<Agreement> findAllByAgreementNumberAndIssueDateAndParticipantsNumberAndOrganizationAndClient(String agreementNumber, Date issueDate, Short participantsNumber, Organization organization, Client client);
+    List<Agreement> findAllByIssueDateAndParticipantsNumberAndOrganizationAndClient(Date issueDate, Short participantsNumber, Organization organization, Client client);
 
     @Override
     Page<Agreement> findAll(Pageable pageable);

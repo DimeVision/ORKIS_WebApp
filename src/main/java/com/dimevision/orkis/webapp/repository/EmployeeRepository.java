@@ -19,10 +19,5 @@ public interface EmployeeRepository extends JpaRepository<Employee, Long> {
 
     Optional<Employee> findEmployeeByEmail(String email);
 
-//    @Query(value = "SELECT " +
-//            "* " +
-//            "FROM employee AS emp " +
-//            "LEFT JOIN organization AS org " +
-//            "ON emp.organization_id = org.id", nativeQuery = true)
-    List<Employee> findAllByIdAndFullNameAndRole(Long id, String fullName, Role role);
+    List<Employee> findAllByOrganizationId(Long organization_id);
 }

@@ -25,10 +25,10 @@ public interface ClientRepository extends JpaRepository<Client, Long> {
     void deleteById(Long aLong);
 
     @Override
-    @Query(value = "SELECT " +
-            "* " +
-            "FROM client AS c " +
-            "LEFT JOIN passport AS p " +
-            "ON c.passport_id = p.id", nativeQuery = true)
+//    @Query(value = "SELECT " +
+//            "* " +
+//            "FROM client AS c " +
+//            "LEFT JOIN passport AS p " +
+//            "ON c.passport_id = p.id", nativeQuery = true)
     List<Client> findAll();
 }
