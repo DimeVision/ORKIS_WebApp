@@ -5,9 +5,11 @@ import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
 import java.math.BigDecimal;
+import java.util.Date;
 import java.util.Set;
 
 /**
@@ -31,6 +33,10 @@ public class Contract {
 
     @Column(name = "title")
     private String title;
+
+    @Column(name = "issue_date")
+    @DateTimeFormat(pattern = "yyyy-MM-dd hh:mm")
+    private Date issueDate;
 
     @Column(name = "num")
     private String contractNumber;

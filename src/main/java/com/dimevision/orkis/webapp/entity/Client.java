@@ -68,8 +68,8 @@ public class Client {
     @JsonBackReference
     private ClientStatus status;
 
-    @OneToOne(targetEntity = Passport.class)
-    @JoinColumn(name = "passport_id")
+    @OneToOne(targetEntity = Passport.class, fetch = LAZY)
+    @JoinColumn(name = "passport_id", updatable = false, unique = true)
     @JsonBackReference
     private Passport passport;
 

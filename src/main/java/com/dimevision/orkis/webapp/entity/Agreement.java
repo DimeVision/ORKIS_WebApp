@@ -1,6 +1,7 @@
 package com.dimevision.orkis.webapp.entity;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -10,6 +11,7 @@ import javax.persistence.*;
 import java.time.LocalDate;
 import java.util.Date;
 
+import static javax.persistence.FetchType.LAZY;
 import static javax.persistence.GenerationType.IDENTITY;
 
 /**
@@ -34,9 +36,6 @@ public class Agreement {
     @Column(name = "title")
     private String title;
 
-    @Column(name = "num")
-    private String agreementNumber;
-
     @Column(name = "issue_date")
     @DateTimeFormat(pattern = "yyyy-MM-dd hh:mm")
     private Date issueDate;
@@ -44,7 +43,7 @@ public class Agreement {
     @Column(name = "participants_num")
     private Short participantsNumber;
 
-    @ManyToOne
+    @ManyToOne(fetch = LAZY)
     @JoinColumn(name = "country_id", nullable = false)
     @JsonBackReference
     private Country country;
@@ -57,17 +56,22 @@ public class Agreement {
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private LocalDate tripEndDate;
 
-    @ManyToOne
+    @ManyToOne(fetch = LAZY)
     @JoinColumn(name = "client_id")
     @JsonBackReference
     private Client client;
 
-    @ManyToOne
+    @ManyToOne(fetch = LAZY)
+    @JoinColumn(name = "agent_id")
+    @JsonManagedReference
+    private Agent agent;
+
+    @ManyToOne(fetch = LAZY)
     @JoinColumn(name = "organization_id")
     @JsonBackReference
     private Organization organization;
 
-    @OneToOne(mappedBy = "agreement")
+    @OneToOne(mappedBy = "agreement", fetch = LAZY)
     @JsonBackReference
     private Contract contract;
 

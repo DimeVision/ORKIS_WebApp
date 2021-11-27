@@ -9,6 +9,8 @@ import lombok.Setter;
 
 import javax.persistence.*;
 
+import java.util.Set;
+
 import static javax.persistence.FetchType.LAZY;
 
 /**
@@ -47,6 +49,10 @@ public class Agent {
     @JsonBackReference
     private Organization organization;
 
+    @OneToMany(mappedBy = "agent", fetch = LAZY)
+    @JsonBackReference
+    private Set<Agreement> agreement;
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -60,5 +66,10 @@ public class Agent {
     @Override
     public int hashCode() {
         return id.hashCode();
+    }
+
+    @Override
+    public String toString() {
+        return name;
     }
 }

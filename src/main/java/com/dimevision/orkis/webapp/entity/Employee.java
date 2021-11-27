@@ -2,7 +2,6 @@ package com.dimevision.orkis.webapp.entity;
 
 import com.dimevision.orkis.webapp.entity.management.Role;
 import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -10,7 +9,6 @@ import lombok.Setter;
 
 import javax.persistence.*;
 import java.time.LocalDate;
-import java.util.Date;
 import java.util.Set;
 
 /**
@@ -47,6 +45,9 @@ public class Employee {
 
     @Column(name = "password")
     private String password;
+
+    @Column(name = "photo_link")
+    private String photoLink;
 
     @ManyToMany
     @JoinTable(name = "employee_role",
