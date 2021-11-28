@@ -1,7 +1,5 @@
 package com.dimevision.orkis.webapp.config;
 
-import com.dimevision.orkis.webapp.entity.management.Permission;
-import com.dimevision.orkis.webapp.entity.management.Role;
 import com.dimevision.orkis.webapp.service.EmployeeDetailsServiceImplementation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -42,15 +40,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         http
                 .csrf().disable()
                 .authorizeRequests()
-                    .antMatchers("/authenticated/**").authenticated()
-                    .antMatchers("/profile/**").authenticated()
-//                .antMatchers("/employees").hasRole(Role.ADMIN.name())
-                    .anyRequest()
-                    .authenticated()
                 .and()
                 .formLogin()
                     .loginPage("/login").permitAll()
-                    .defaultSuccessUrl("/admin", false)
                     .passwordParameter("password")
                     .usernameParameter("username")
                 .and()
@@ -64,7 +56,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                     .clearAuthentication(true)
                     .invalidateHttpSession(true)
                     .deleteCookies("JSESSIONID", "remember-me")
-                    .logoutSuccessUrl("/login");
+                    .logoutSuccessUrl("/");
     }
 
     @Override
