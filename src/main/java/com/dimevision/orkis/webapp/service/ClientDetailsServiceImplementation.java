@@ -1,24 +1,18 @@
 package com.dimevision.orkis.webapp.service;
 
-import com.dimevision.orkis.webapp.entity.Agent;
 import com.dimevision.orkis.webapp.entity.Client;
-import com.dimevision.orkis.webapp.entity.ClientStatus;
 import com.dimevision.orkis.webapp.entity.management.Role;
 import com.dimevision.orkis.webapp.repository.ClientRepository;
 import com.dimevision.orkis.webapp.security.SecurityUser;
 import com.dimevision.orkis.webapp.service.paging.Paged;
 import com.dimevision.orkis.webapp.service.paging.Paging;
-import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
-import org.springframework.data.jpa.repository.Query;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
-
-import java.util.List;
 
 /**
  * @author Dimevision
@@ -40,10 +34,6 @@ public class ClientDetailsServiceImplementation implements UserDetailsService {
 
     public Client findClientById(Long id) {
         return clientRepository.getById(id);
-    }
-
-    public List<Client> findAllClients() {
-        return clientRepository.findAll();
     }
 
     public void saveClient(Client client) {

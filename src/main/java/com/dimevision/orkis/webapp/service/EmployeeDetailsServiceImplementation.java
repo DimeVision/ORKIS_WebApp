@@ -3,6 +3,7 @@ package com.dimevision.orkis.webapp.service;
 import com.dimevision.orkis.webapp.entity.Agreement;
 import com.dimevision.orkis.webapp.entity.Employee;
 import com.dimevision.orkis.webapp.repository.AgreementRepository;
+import com.dimevision.orkis.webapp.repository.EmployeeRepository;
 import com.dimevision.orkis.webapp.repository.UserRepository;
 import com.dimevision.orkis.webapp.security.SecurityAdmin;
 import com.dimevision.orkis.webapp.service.paging.Paged;
@@ -27,14 +28,16 @@ public class EmployeeDetailsServiceImplementation implements UserDetailsService 
 
     private final UserRepository userRepository;
     private final AgreementRepository agreementRepository;
+    private final EmployeeRepository employeeRepository;
 
     public static long employeesCount;
 
     @Autowired
-    public EmployeeDetailsServiceImplementation(UserRepository userRepository, AgreementRepository agreementRepository) {
+    public EmployeeDetailsServiceImplementation(UserRepository userRepository, AgreementRepository agreementRepository, EmployeeRepository employeeRepository) {
         this.userRepository = userRepository;
         this.agreementRepository = agreementRepository;
         employeesCount = userRepository.count();
+        this.employeeRepository = employeeRepository;
     }
 
     public Employee getEmployeeById(Long id) {
@@ -49,8 +52,16 @@ public class EmployeeDetailsServiceImplementation implements UserDetailsService 
         userRepository.save(employee);
     }
 
+    public Employee savedEmployee(Employee employee) {
+        return userRepository.save(employee);
+    }
+
     public void deleteEmployeeById(Long id) {
         userRepository.deleteById(id);
+    }
+
+    public List<Employee> findAllByOrganizationId(Long organization_id) {
+        return employeeRepository.findAllByOrganizationId(organization_id);
     }
 
     @Override
