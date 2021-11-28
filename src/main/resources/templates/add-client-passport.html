@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Welcome</title>
+    <link rel="stylesheet" href="form.css" th:href="@{form.css}">
+    <link th:rel="stylesheet" th:href="@{/assets/tempusdominus-bootstrap-4/tempusdominus-bootstrap-4.min.css}"/>
+    <link th:rel="stylesheet" th:href="@{/webjars/bootstrap/4.0.0-2/css/bootstrap.min.css} "/>
+    <link th:rel="stylesheet" th:href="@{assets/bootstrap-select-1.13.9/dist/css/bootstrap-select.css}"/>
+    <link th:rel="stylesheet" th:href="@{/webjars/font-awesome/5.11.2/css/all.css} "/>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/css/bootstrap.min.css"
+          integrity="sha384-zCbKRCUGaJDkqS1kPbPd7TveP5iyJE0EjAuZQTgFLD2ylzuqKfdKlfG/eSrtxUkn" crossorigin="anonymous">
+    <link rel="stylesheet"
+          href="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.14/dist/css/bootstrap-select.min.css">
+</head>
+
+<body>
+
+<div class="container">
+    <div class="content">
+        <form action="#" th:action="@{/create-passport}" th:object="${passport}" th:method="POST">
+            <div class="title">Паспорт</div>
+            <div class="user-details">
+                <div class="input-box">
+                    <span class="details">Кем</span>
+                    <input type="text" th:field="*{department}" id="department" name="department"
+                           placeholder="Введите название подразделения" required>
+                </div>
+                <div class="input-box">
+                    <span class="details">Серия паспорта</span>
+                    <input type="text" th:field="*{serialNumber}" id="series" placeholder="Введите серию паспорта"
+                           required>
+                </div>
+                <div class="input-box">
+                    <span class="details">Номер паспорта</span>
+                    <input type="text" th:field="*{passportNumber}" id="number" placeholder="Введите номер паспорта"
+                           required>
+                </div>
+            </div>
+            <div class="user-details">
+                <div class="input-box">
+                    <span class="details">Дата выдачи</span>
+                    <div class="input-group date" id="datetimepicker1" data-target-input="nearest">
+                        <div class="input-group-append" data-target="#datetimepicker1" data-toggle="datetimepicker">
+                            <input type="text" th:field="*{issueDate}" id="issueDate"
+                                   placeholder="Дата выдачи" required>
+                            <div class="input-group-text">
+                                <i class="fa fa-calendar-alt"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="input-box">
+                    <span class="details">Годен до</span>
+                    <div class="input-group date" id="datetimepicker2" data-target-input="nearest">
+                        <div class="input-group-append" data-target="#datetimepicker2" data-toggle="datetimepicker">
+                            <input th:field="*{expiredDate}" type="text" id="expiredDate" placeholder="Дата действительности"
+                                   required>
+                            <div class="input-group-text">
+                                <i class="fa fa-calendar-alt"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="button">
+                <input type="submit" value="Добавить">
+            </div>
+        </form>
+    </div>
+</div>
+
+<script th:src="@{/webjars/jquery/jquery.min.js}"></script>
+<script th:src="@{/webjars/popper.js/umd/popper.min.js}"></script>
+<script th:src="@{/webjars/bootstrap/js/bootstrap.min.js}"></script>
+<script th:src="@{/assets/moment/moment.min.js}"></script>
+<script th:src="@{/assets/tempusdominus-bootstrap-4/tempusdominus-bootstrap-4.min.js}"></script>
+
+<script>
+    $.fn.datetimepicker.Constructor.Default = $.extend({}, $.fn.datetimepicker.Constructor.Default, {
+        icons: {
+            time: 'far fa-clock',
+            date: 'far fa-calendar',
+            up: 'fas fa-arrow-up',
+            down: 'fas fa-arrow-down',
+            previous: 'fas fa-chevron-left',
+            next: 'fas fa-chevron-right',
+            today: 'far fa-calendar-check-o',
+            clear: 'far fa-trash',
+            close: 'far fa-times'
+        }
+    });
+
+    $('#datetimepicker1').datetimepicker({
+        format: 'YYYY-MM-DD'
+    });
+
+    $('#datetimepicker2').datetimepicker({
+        format: 'YYYY-MM-DD'
+    });
+</script>
+
+</body>
+
+</html>

@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Welcome</title>
+    <link th:rel="stylesheet" th:href="@{form.css}">
+    <link th:rel="stylesheet" th:href="@{assets/password-strength-meter/password.min.css}"/>
+    <link th:rel="stylesheet" th:href="@{webjars/bootstrap/4.0.0-2/css/bootstrap.min.css} "/>
+    <link th:rel="stylesheet" th:href="@{webjars/font-awesome/5.11.2/css/all.css} "/>
+</head>
+
+<body>
+
+<div class="container">
+    <div class="title">Данные клиента</div>
+    <div class="content">
+        <!--/*@thymesVar id="agent" type="com.dimevision.orkis.webapp.entity.Agent"*/-->
+        <form th:action="@{/agent-update/{id}(id=${agent.id})}" th:object="${agent}" th:method="POST">
+            <div class="user-details">
+                <div class="input-box">
+                    <span class="details">ФИО</span>
+                    <input type="text" th:field="*{name}" id="name" placeholder="Введите полное имя" required>
+                </div>
+                <div class="input-box">
+                    <span class="details">Email</span>
+                    <input type="text" th:field="*{email}" id="email" placeholder="Введите email" required>
+                </div>
+                <div class="input-box">
+                    <span class="details">Организация</span>
+                    <select th:field="*{organization}" name="organizations" id="organization" required>
+                        <option hidden value="0">Выбрать организацию</option>
+                        <option th:each="organization : ${organizations}" th:value="${organization.id}"
+                                th:text="${organization.name}" th:name="organization" th:id="organization"></option>
+                    </select>
+                </div>
+                <div class="input-box">
+                    <span class="details">Password</span>
+                    <div class="input-group" id="show_hide_password">
+                        <input type="password" class="form-control" th:field="*{password}" id="passwordDecoded"
+                               placeholder="Введите пароль" required>
+                        <div class="input-group-append">
+                            <span class="input-group-text">
+                                <i class="fa fa-eye-slash" aria-hidden="true"></i>
+                            </span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="button">
+                <input type="submit" value="Добавить">
+            </div>
+            <button type="submit" th:href="@{/agents}">Отменит</button>
+        </form>
+    </div>
+</div>
+
+<script th:src="@{/webjars/jquery/jquery.min.js}"></script>
+<script th:src="@{/webjars/popper.js/umd/popper.min.js}"></script>
+<script th:src="@{/webjars/bootstrap/js/bootstrap.min.js}"></script>
+<script th:src="@{assets/password-strength-meter/password.min.js}"></script>
+
+<script>
+    $('#passwordDecoded').password({
+        closestSelector: '.input-box',
+        shortPass: 'The password is too short',
+        badPass: 'Weak; try combining letters & numbers',
+        goodPass: 'Medium; try using special characters',
+        strongPass: 'Strong password',
+        containsField: 'The password contains your username',
+        enterPass: 'Type your password',
+        showPercent: false,
+        showText: true, // shows the text tips
+        animate: true, // whether or not to animate the progress bar on input blur/focus
+        animateSpeed: 'fast', // the above animation speed
+        field: false, // select the match field (selector or jQuery instance) for better password checks
+        fieldPartialMatch: true, // whether to check for partials in field
+        minimumLength: 4 // minimum password length (below this threshold, the score is 0)
+    });
+</script>
+
+<script>
+    var input = $("#show_hide_password input");
+    var icon = $("#show_hide_password i");
+
+    icon.on('click', function (event) {
+        event.preventDefault();
+
+        if (input.attr("type") === "text") {
+            input.attr('type', 'password');
+            icon.addClass("fa-eye-slash");
+            icon.removeClass("fa-eye");
+
+        } else if (input.attr("type") === "password") {
+            input.attr('type', 'text');
+            icon.removeClass("fa-eye-slash");
+            icon.addClass("fa-eye");
+        }
+    });
+</script>
+
+</body>
+
+</html>

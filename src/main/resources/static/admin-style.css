@@ -147,6 +147,33 @@ main {
     margin-left: 1rem;
 }
 
+/*.table-responsive {*/
+/*    color: var(--color-dark);*/
+/*    display: flex;*/
+/*    text-decoration: none;*/
+/*    font-size: 1.1rem;*/
+/*    flex-direction: row;*/
+/*    justify-content: center;*/
+/*    align-items: center;*/
+/*}*/
+
+.shit {
+    color: var(--color-dark);
+    display: flex;
+    margin-left: auto;
+    justify-content: space-around;
+    text-decoration: none;
+    font-size: 1.5rem;
+}
+
+.shit a {
+    display: flex;
+    border-radius: 5px;
+    padding: 2px;
+    border-style: double;
+    color: var(--main-color);
+}
+
 .social-icons div {
     height: 40px;
     width: 40px;
@@ -457,6 +484,6 @@ nav .pagination {
     justify-content: space-between;
     margin-top: 1.5rem;
     align-items: center;
-    font-size: 14px;
+    font-size: 1rem;
     color: var(--main-color);
 }

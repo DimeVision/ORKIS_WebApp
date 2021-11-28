@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Admin Panel</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/lykmapipo/themify-icons@0.1.2/css/themify-icons.css">
+    <link rel="stylesheet" th:href="@{admin-style.css}">
+    <!--    <link th:rel="stylesheet" th:href="@{webjars/bootstrap/4.0.0-2/css/bootstrap.min.css} "/>-->
+</head>
+
+<body>
+
+<input type="checkbox" id="sidebar-toggle">
+<div class="sidebar">
+    <div class="sidebar-header">
+        <h3 class="brand">
+            <span class="ti-unlink"></span>
+            <span>Админ</span>
+        </h3>
+        <label for="sidebar-toggle" class="ti-menu-alt"></label>
+    </div>
+
+    <div class="sidebar-menu">
+        <ul>
+            <li>
+                <a th:href="@{/admin}">
+                    <span class="ti-home"></span>
+                    <span>Домашняя</span>
+                </a>
+            </li>
+            <li>
+                <a th:href="@{/employees}">
+                    <span class="ti-face-smile"></span>
+                    <span>Сотрудники</span>
+                </a>
+            </li>
+            <li>
+                <a th:href="@{/agents}">
+                    <span class="ti-face-sad"></span>
+                    <span>Агенты</span>
+                </a>
+            </li>
+            <li>
+                <a th:href="@{/clients}">
+                    <span class="ti-money"></span>
+                    <span>Клиенты</span>
+                </a>
+            </li>
+            <li>
+                <a href="">
+                    <span class="ti-agenda"></span>
+                    <span>Список напоминаний</span>
+                </a>
+            </li>
+            <li>
+                <a th:href="@{/logout}">
+                    <span class="ti-power-off"></span>
+                    <span>Выйти</span>
+                </a>
+            </li>
+        </ul>
+    </div>
+</div>
+
+<div class="main-content">
+
+    <header>
+        <div class="search-wrapper">
+            <span class="ti-search"></span>
+            <input type="search" name="" id="" placeholder="Search">
+        </div>
+
+        <div class="social-icons">
+            <span class="ti-bell"></span>
+            <span class="ti-comment"></span>
+            <div></div>
+            <!--profile-->
+        </div>
+    </header>
+
+    <main>
+        <!-- <div class="activity-grid"> -->
+        <div class="activity-card">
+            <h3>Список агентов</h3>
+
+            <div class="table-responsive">
+                <table>
+                    <thead>
+                    <tr>
+                        <th scope="col">Id</th>
+                        <th scope="col">Organization</th>
+                        <th scope="col">Name</th>
+                        <th scope="col">Email</th>
+                        <th scope="col">Operation</th>
+                        <th scope="col">Status</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr th:each="agent : ${posts.page}">
+                        <td th:text="${agent.id}"></td>
+                        <td th:text="${agent.organization}"></td>
+                        <td th:text="${agent.name}"></td>
+                        <td th:text="${agent.email}"></td>
+                        <td>
+                            <div class="shit">
+                                <a th:href="@{/agent-delete/{id}(id=${agent.id})}">
+                                    <span class="ti-close"></span>
+                                </a>
+                                <a th:href="@{/agent-update/{id}(id=${agent.id})}">
+                                    <span class="ti-pencil"></span>
+                                </a>
+                            </div>
+                        </td>
+                        <td th:text="Soon..."></td>
+                    </tr>
+                    </tbody>
+                </table>
+
+
+                <nav aria-label="Page navigation" class="pagination">
+                    <ul class="pagination" th:if="${posts.page.totalPages > 1}">
+                        <li class="page-item" th:classappend="${!posts.paging.isPrevEnabled()? 'disabled' : ''}">
+                            <a class="page-link" th:href="@{'?pageNumber=' + ${posts.paging.pageNumber - 1}}"
+                               th:method="POST"
+                               tabindex="-1">
+                                <
+                            </a>
+                        </li>
+                        <th:block th:each="item : ${posts.paging.getItems()}">
+                            <li class="page-item"
+                                th:classappend="${item.index == posts.paging.pageNumber? 'active' : ''}"
+                                th:if="${item.pageItemType.name() == 'PAGE'}">
+                                <a class="page-link" th:href="@{'?pageNumber=' + ${item.index}}"
+                                   th:method="POST"
+                                   th:text="${item.index}"></a>
+                            </li>
+                            <li class="page-item disabled" th:if="${item.pageItemType.name() == 'DOTS'}">
+                                <a class="page-link" href="#">...</a>
+                            </li>
+                        </th:block>
+                        <li class="page-item" th:classappend="${!posts.paging.isNextEnabled()? 'disabled' : ''}">
+                            <a class="page-link" th:href="@{'?pageNumber=' + ${posts.paging.pageNumber + 1}}"
+                               th:method="POST">
+                                >
+                            </a>
+                        </li>
+                    </ul>
+                </nav>
+
+            </div>
+        </div>
+        <div class="add-button">
+            <a th:href="@{/agent-create}">Добавить нового агента</a>
+        </div>
+    </main>
+</div>
+
+
+<script th:src="@{/webjars/jquery/jquery.min.js}"></script>
+<script th:src="@{/webjars/popper.js/umd/popper.min.js}"></script>
+<script th:src="@{/webjars/bootstrap/js/bootstrap.min.js}"></script>
+
+</body>
+
+</html>

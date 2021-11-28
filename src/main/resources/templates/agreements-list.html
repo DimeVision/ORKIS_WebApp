@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Manager Panel</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/lykmapipo/themify-icons@0.1.2/css/themify-icons.css">
+    <link rel="stylesheet" href="admin-style.css" th:href="@{admin-style.css}">
+</head>
+
+<body>
+
+<input type="checkbox" id="sidebar-toggle">
+<div class="sidebar">
+    <div class="sidebar-header">
+        <h3 class="brand">
+            <span class="ti-unlink"></span>
+            <span>Админ</span>
+        </h3>
+        <label for="sidebar-toggle" class="ti-menu-alt"></label>
+    </div>
+
+    <div class="sidebar-menu">
+        <ul>
+            <li>
+                <a th:href="@{/manager}">
+                    <span class="ti-home"></span>
+                    <span>Домашняя</span>
+                </a>
+            </li>
+            <li>
+                <a th:href="@{/clients}">
+                    <span class="ti-money"></span>
+                    <span>Клиенты</span>
+                </a>
+            </li>
+            <li>
+                <a href="">
+                    <span class="ti-agenda"></span>
+                    <span>Список напоминаний</span>
+                </a>
+            </li>
+            <li>
+                <a th:href="@{/agreements}">
+                    <span class="ti-clipboard"></span>
+                    <span>Соглашения</span>
+                </a>
+            </li>
+            <li>
+                <a href="">
+                    <span class="ti-folder"></span>
+                    <span>Projects</span>
+                </a>
+            </li>
+            <li>
+                <a href="">
+                    <span class="ti-book"></span>
+                    <span>Contacts</span>
+                </a>
+            </li>
+            <li>
+                <a href="">
+                    <span class="ti-settings"></span>
+                    <span>Профиль</span>
+                </a>
+            </li>
+        </ul>
+    </div>
+</div>
+
+<div class="main-content">
+
+    <header>
+        <div class="search-wrapper">
+            <span class="ti-search"></span>
+            <input type="search" name="" id="" placeholder="Search">
+        </div>
+
+        <div class="social-icons">
+            <span class="ti-bell"></span>
+            <span class="ti-comment"></span>
+            <div></div>
+            <!--profile-->
+        </div>
+    </header>
+    <main>
+
+        <div class="activity-card">
+            <h3>Предварительные соглашения</h3>
+            <div class="table-responsive">
+                <table>
+                    <thead>
+                    <tr>
+                        <th>Номер</th>
+                        <th>Дата подписания</th>
+                        <th>Организация</th>
+                        <th>Страна</th>
+                        <th>Клиент</th>
+                        <th>Количество <br/>участников</th>
+                        <th>Сотрудник</th>
+                        <th>Дата поездки</th>
+                        <th>Операция</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr th:each="agreement : ${agreementsPage.page}">
+                        <td th:text="${agreement.id}"></td>
+                        <td th:text="${#dates.format(agreement.issueDate, 'YYYY-MM-dd hh:mm')}"></td>
+                        <td th:text="${agreement.organization}"></td>
+                        <td th:text="${agreement.country}"></td>
+                        <td th:text="${agreement.client}"></td>
+                        <td th:text="${agreement.participantsNumber}"></td>
+                        <td th:text="${agreement.agent}"></td>
+                        <td>
+                            <p th:text="${agreement.tripStartDate}"></p>
+                            <p th:text="${agreement.tripEndDate}"></p>
+                        </td>
+                        <td>
+                            <a th:href="@{delete-agreement/{id}(id=${agreement.id})}">Delete</a>
+                            <a th:href="@{agreement-update/{id}(id=${agreement.id})}">Update</a>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+
+                <nav aria-label="Page navigation" class="pagination">
+                    <ul class="pagination" th:if="${agreementsPage.page.totalPages > 1}">
+                        <li class="page-item"
+                            th:classappend="${!agreementsPage.paging.isPrevEnabled()? 'disabled' : ''}">
+                            <a class="page-link" th:href="@{'?pageNumber=' + ${agreementsPage.paging.pageNumber - 1}}"
+                               th:method="POST"
+                               tabindex="-1">
+                                <
+                            </a>
+                        </li>
+                        <th:block th:each="item : ${agreementsPage.paging.getItems()}">
+                            <li class="page-item"
+                                th:classappend="${item.index == agreementsPage.paging.pageNumber? 'active' : ''}"
+                                th:if="${item.pageItemType.name() == 'PAGE'}">
+                                <a class="page-link" th:href="@{'?pageNumber=' + ${item.index}}"
+                                   th:method="POST"
+                                   th:text="${item.index}"></a>
+                            </li>
+                            <li class="page-item disabled" th:if="${item.pageItemType.name() == 'DOTS'}">
+                                <a class="page-link" href="#">...</a>
+                            </li>
+                        </th:block>
+                        <li class="page-item"
+                            th:classappend="${!agreementsPage.paging.isNextEnabled()? 'disabled' : ''}">
+                            <a class="page-link" th:href="@{'?pageNumber=' + ${agreementsPage.paging.pageNumber + 1}}"
+                               th:method="POST">
+                                >
+                            </a>
+                        </li>
+                    </ul>
+                </nav>
+            </div>
+        </div>
+        <div class="add-button">
+            <a th:href="@{/create-agreement}">Создать соглашение</a>
+        </div>
+    </main>
+</div>
+</body>
+
+</html>

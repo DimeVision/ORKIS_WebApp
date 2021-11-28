@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../static/style.css" th:href="@{style.css}">
+    <title>Fluid Flights</title>
+</head>
+
+<body>
+
+<!-- HEADER -->
+<header class="header">
+    <div class="container">
+        <div class="header__inner">
+            <div class="header__logo">
+                <img th:src="@{images/logo.png}" src="../static/images/logo.png" alt="LOGO" width="100" height="100">
+            </div>
+
+            <nav class="nav">
+                <a class="nav__link" href="#">Flights</a>
+                <a class="nav__link" href="#">Hotels</a>
+                <a class="nav__link" href="#">Sales</a>
+                <a class="nav__link" href="#">Contacts</a>
+                <a class="nav__link" href="/registration">Sign Up</a>
+            </nav>
+        </div>
+    </div>
+</header>
+
+<!-- INTRO -->
+<div class="intro">
+    <div class="container">
+        <div class="intro__inner">
+            <h1 class="intro__title">Билеты по самым низким ценам!</h1>
+            <h2 class="intro__subtitle">
+                Сайт предоставляет обширное количество опций для выбора наиболее интересного предложения.
+            </h2>
+
+            <!-- Header option panel -->
+            <div class="page-header">
+                <form action="#" class="avia-form">
+                    <label class="header__label">Откуда
+                        <input type="text" placeholder="Откуда"/>
+                    </label>
+                    <label class="header__label">Куда
+                        <input type="text" placeholder="Куда"/>
+                    </label>
+                    <label class="header__label">Когда
+                        <input type="text" placeholder="Когда"/>
+                    </label>
+                </form>
+            </div>
+            <a class="button  button--mod" href="#">Найти</a>
+        </div>
+
+    </div>
+</div>
+
+<!-- FEATURES -->
+<div class="container">
+    <div class="features">
+        <div class="features__item">
+            <img th:src="@{images/feature_icons/boarding-pass.png}" class="features__icon"
+                 src="../static/images/feature_icons/boarding-pass.png" alt="" width="75" height="75">
+            <h4 class="features__title">Билеты по всему свету</h4>
+            <div class="features__text">
+                asd alsdnf as;d fna sldfma sd; fm;asmd mfasdk mf;ldsg sdfl mgls;df mgsdlfmgsld; f mg;sldf
+                glngasd;ngkanskl
+            </div>
+        </div>
+
+        <div class="features__item">
+            <img th:src="@{images/feature_icons/custom-features.png}" class="features__icon"
+                 src="../static/images/feature_icons/custom-features.png" alt="" width="75"
+                 height="75">
+            <h4 class="features__title">EET FUK</h4>
+            <div class="features__text">
+                asd alsdnf as;d fna sldfma sd; fm;asmd mfasdk mf;ldsg sdfl mgls;df mgsdlfmgsld; f mg;sldf
+                glngasd;ngkanskl
+            </div>
+        </div>
+
+        <div class="features__item">
+            <img th:src="@{images/feature_icons/clock.png}" class="features__icon"
+                 src="../static/images/feature_icons/clock.png" alt="" width="75" height="75">
+            <h4 class="features__title">Экономим ваше время</h4>
+            <div class="features__text">
+                Сервис самостоятельно найдёт наиболее актуальные предложения от авиа компаний
+            </div>
+        </div>
+
+        <div class="features__item">
+            <img th:src="@{images/feature_icons/boarding-pass.png}" class="features__icon"
+                 src="../static/images/feature_icons/boarding-pass.png" alt="" width="75" height="75">
+            <h4 class="features__title">EET FUK</h4>
+            <div class="features__text">
+                asd alsdnf as;d fna sldfma sd; fm;asmd mfasdk mf;ldsg sdfl mgls;df mgsdlfmgsld; f mg;sldf
+                glngasd;ngkanskl
+            </div>
+        </div>
+
+        <div class="features__item">
+            <img th:src="@{images/feature_icons/custom-features.png}" class="features__icon"
+                 src="../static/images/feature_icons/custom-features.png" alt="" width="75"
+                 height="75">
+            <h4 class="features__title">EET FUK</h4>
+            <div class="features__text">
+                asd alsdnf as;d fna sldfma sd; fm;asmd mfasdk mf;ldsg sdfl mgls;df mgsdlfmgsld; f mg;sldf
+                glngasd;ngkanskl
+            </div>
+        </div>
+
+        <div class="features__item">
+            <img th:src="@{images/feature_icons/clock.png}" class="features__icon"
+                 src="../static/images/feature_icons/clock.png" alt="" width="75" height="75">
+            <h4 class="features__title">EET FUK</h4>
+            <div class="features__text">
+                asd alsdnf as;d fna sldfma sd; fm;asmd mfasdk mf;ldsg sdfl mgls;df mgsdlfmgsld; f mg;sldf
+                glngasd;ngkanskl
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+
+</html>
